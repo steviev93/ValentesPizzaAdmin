@@ -1,0 +1,21 @@
+<div class="col-md-3">
+    <h2 class="text-center">Delete Product</h2>
+    <form [formGroup]="deleteForm" (ngSubmit)="onSubmit()">
+  
+    <div class="form-group">
+        <p>Are you sure you want to delete the following?</p>
+        <label>Name:</label>
+        <input type="text" formControlName="name"
+        placeholder="{{product.name}}" class="form-control"
+        readonly>
+        <label>Description:</label>
+        <input type="text" formControlName="description"
+        placeholder="{{product.description}}" class="form-control"
+        readonly>
+        <label>Price:</label>
+        <input type="text" formControlName="price"
+        placeholder="{{product.price}}" class="form-control"
+        readonly>
+            
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>

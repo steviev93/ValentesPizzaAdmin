@@ -1,0 +1,23 @@
+<div class="card ml-4" style="width: 18rem; color: black;">
+
+        <div class="card-header" style="color: black;">{{ product.name }}</div>
+        <img src="assets/images/{{ product.image }}" *ngIf="product.image" alt="{{ product.name }}" class="card-img-top">
+        <div *ngIf="!product.Image" class="card-img-top">Nada</div>
+        <div class="card-body">
+            
+            <p class="card-subtitle mt-3 mb-3 text-muted">
+                {{product.Price|currency:'USD':true}}
+            </p>
+            <p class="card-text" [innerHTML]="product.description">
+            </p>
+        </div>
+
+    <div  *ngIf="isLoggedIn()" class="m-4 justify-space-between">
+        <button (click)="editProduct(product)" class="btn btn-info m-2">
+            Edit
+        </button>
+        <button (click)="deleteProduct(product)" class="btn btn-danger m-2">
+            Delete
+        </button>
+    </div>
+</div>

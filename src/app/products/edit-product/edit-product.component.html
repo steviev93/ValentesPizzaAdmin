@@ -1,0 +1,77 @@
+<div class="col-md-3">
+    <h2 class="text-center">Edit Product</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  
+  
+    <div class="form-group">
+        <label>Name:</label>
+        <input type="text" formControlName="name"
+        placeholder="{{product.name}}" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+        [(ngModel)]="product.name" required>
+        <div *ngIf="submitted && f.name.errors">
+            <div *ngIf="f.name.errors.required">
+            Name is required
+            </div>
+        </div>
+    </div>
+  
+    <div class="form-group">
+      <label>Description:</label>
+      <input type="text" formControlName="description"
+      placeholder="{{product.description}}" class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+      [(ngModel)]="product.description" required>
+      <div *ngIf="submitted && f.description.errors">
+          <div *ngIf="f.description.errors.required">
+          Description is required
+          </div>
+      </div>
+    </div> 
+  
+    <div class="form-group">
+      <label>Price:</label>
+      <input type="text" formControlName="price"
+      placeholder="{{product.price}}" class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.price.errors }"
+      [(ngModel)]="product.price" required>
+      <div *ngIf="submitted && f.price.errors">
+          <div *ngIf="f.price.errors.required">
+          Price is required
+          </div>
+      </div>
+    </div> 
+  
+    <div class="form-group">
+      <label>Image:</label>
+      <input type="text" formControlName="image"
+      placeholder="Image" class="form-control">
+      <!-- <div *ngIf="submitted && f.image.errors">
+          <div *ngIf="f.image.errors.required">
+          Image is required
+          </div>
+      </div> -->
+    </div>  
+  
+   
+    <div class="form-group">
+        <label>Product Group:</label>
+        <select style="width:100%;height:2.5em" class="form-select" aria-label="Default select example" 
+      formControlName="productGroup" [ngClass]="{ 'is-invalid': submitted && f.productGroup.errors }"
+      [(ngModel)]="selected">
+      <option *ngFor="let pg of productGroupList" [value]="pg.id">
+        {{ pg.name }}
+    </option>
+      </select>
+        <div *ngIf="submitted && f.productGroup.errors">
+            <div *ngIf="f.productGroup.errors.required">
+                Product Group is required
+            </div>
+        </div>
+      </div> 
+  
+    <button type="submit" class="btn btn-info">Save</button>
+    <button type="submit" class="btn btn-info mx-4" routerLink="..">Back</button>
+  
+  </form>
+  </div>

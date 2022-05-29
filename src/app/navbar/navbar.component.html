@@ -1,0 +1,70 @@
+<!-- <nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="#"><img src="/assets/images/logo.png"></a>
+    <button class="navbar-toggler" type="button" datatoggle="collapse" data-target="#navbarNavAltMarkup" ariacontrols="navbarNavAltMarkup" aria-expanded="false" arialabel="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" routerLink="list-trips">Trips<span class=" sr-only ">(current)</span></a>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" routerLink="login" *ngIf="!isLoggedIn()">
+        <span class="has-icon-left">Log In</span>
+      </a>
+      <a class="navbar-item" (click)="onLogout()" *ngIf="isLoggedIn()">
+        <span class="has-icon-left">Log Out</span>
+      </a>
+    </div>
+   </nav> -->
+
+
+
+   <nav class="navbar navbar-expand-lg navbar-light" style="max-width:100%">
+    <a class="" href="#" style="padding-top: 0em; text-align: center;">
+        <!-- <img class="logo-img" style="height: 5em;padding-left: 10%;" src="https://dewey.tailorbrands.com/production/brand_version_mockup_image/423/7198875423_2212e8a2-79cc-40f9-8816-b5e85cc05e95.png?cb=1651384136" alt=""> -->
+        <h1 style="font-family: 'Ms Madi', cursive; margin-bottom: -10%; line-height:2em;font-size: 5em;">Valente's</h1>
+        <h2 style="font-family: 'Ms Madi', cursive;font-size: 3em;">Pizza</h2>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="font-size: 1.4em;">
+      <div class="navbar-nav mr-auto" style="font-family: 'Satisfy', cursive; font-weight: lighter; font-size:1.2em;padding-left:1em;">
+        <a class="nav-item nav-link active" style="color:black" routerLink="">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" style="color:black" routerLink="list-products">Products</a>
+        <a class="nav-item nav-link" style="color:black" routerLink="list-productgroups">Product Groups</a>
+        <a class="nav-item nav-link" style="color:black" href="#">Reporting</a>
+      </div>
+      <div class="navbar-end">
+        <a class="navbar-item" routerLink="login" *ngIf="!isLoggedIn()">
+          <span class="has-icon-left">Log In</span>
+        </a>
+        <!-- <div class="dropdown" *ngIf="isLoggedIn()" dropdown>
+            <a class="dropdown-toggle ms-2 text-decoration-none" dropdownToggle>Welcome {{user.name | titlecase}}</a>
+            <div class="dropdown-menu mt-3" *dropdownMenu>
+                <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="onLogout()" >Logout</a>
+            </div>
+        </div> -->
+        <div class="dropdown" *ngIf="isLoggedIn()" style="font-family: 'Satisfy', cursive;; font-size: 1.4em; padding-left: 5px; padding-right: 5px">
+          <div class="dropdown-toggle navbar-item nav-link" 
+          type="button" 
+          id="dropdownMenuButton" 
+          data-toggle="dropdown" 
+          aria-haspopup="true" 
+          aria-expanded="false">
+          Welcome {{user.name | titlecase}}
+          </div>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="onLogout()" >Logout</a>
+          </div>
+        </div>
+      
+    </div>
+    </div>
+    
+  </nav>
