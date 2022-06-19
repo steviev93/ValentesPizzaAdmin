@@ -23,25 +23,26 @@ export class ProductListingComponent implements OnInit {
     this.message = '';
   }
 
-  addProduct(): void {
+  addProduct() {
 
     this.router.navigate(['add-product']);
   }
 
-  private getProducts(): void {
+  private getProducts() {
 
     this.message = 'Searching for products';
     this.productDataService
       .getProducts()
-      .then(foundProducts => {
+      .subscribe(foundProducts => {
         this.message = foundProducts.length > 0 ? '' : 'No products found';
         this.products = foundProducts;
-      });
+      },
+      error => {console.log('Trouble getting the products')});
   }
   public isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
-  ngOnInit(): void {
+  ngOnInit() {
     this.getProducts();
   }
 

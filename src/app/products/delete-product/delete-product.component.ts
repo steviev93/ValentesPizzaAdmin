@@ -39,9 +39,12 @@ export class DeleteProductComponent implements OnInit {
     }
     this.productService
     .getProduct(productCode)
-    .then(foundProduct => {
+    .subscribe(foundProduct => {
         this.message = foundProduct == null ? '' : 'No products found';
         this.product = foundProduct as Product;
+      }, error => {
+        alert("Problem fetching products!");
+        this.router.navigate(['']);
       });
 
     // initialize form
@@ -56,9 +59,12 @@ export class DeleteProductComponent implements OnInit {
    onSubmit() {
     if (this.deleteForm.valid) {
       this.productService.deleteProduct(this.deleteForm.value.id)
-        .then(data => {
+        .subscribe(data => {
           console.log(data);
           this.router.navigate(['']);
+      }, error => {
+        alert("Problem deleting product!");
+        this.router.navigate(['']);
       });
     }
   }

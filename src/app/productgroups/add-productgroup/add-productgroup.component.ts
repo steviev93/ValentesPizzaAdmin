@@ -33,12 +33,13 @@ export class AddProductGroupComponent implements OnInit {
     this.submitted = true;
     if(this.addForm.valid){
     this.productGroupService.addProductGroup(this.addForm.value)
-    .then( data => {
+    .subscribe( data => {
       console.log(data);
       this.router.navigate(['']);
-    }).catch(function () {
-      console.log("Promise Rejected");
- });
+    }, error => {
+      alert("Problem adding product group!");
+      this.router.navigate(['']);
+    });
   }
 }
 

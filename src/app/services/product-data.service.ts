@@ -1,10 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
+
 import { AuthResponse } from "../models/authresponse";
 import { Product } from "../models/product";
 import { BROWSER_STORAGE } from "../storage";
 import { User } from "../models/user";
+import { map } from 'rxjs/operators';
 
 
 
@@ -18,7 +20,7 @@ export class ProductDataService {
   private apiBaseUrl = 'https://localhost:44345/api/';
   private productUrl = `${this.apiBaseUrl}products/`;
 
-  public addProduct(formData: Product): Promise<Product> {
+  public addProduct(formData: Product) {
 
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
@@ -26,30 +28,24 @@ export class ProductDataService {
     });
     return this.http
       .post(this.productUrl, formData, { headers: headers })
-      .toPromise()
-      .then((response) => response as Product[])
-      .catch(this.handleError);
+      .pipe(map((response) => response as Product[]));
   }
 
-  public getProducts(): Promise<Product[]> {
+  public getProducts() {
 
     return this.http
       .get(this.productUrl)
-      .toPromise()
-      .then(response => response as Product[])
-      .catch(this.handleError);
+      .pipe(map((response) => response as Product[]));
   };
 
-  public getProduct(tripCode: string): Promise<Product> {
+  public getProduct(tripCode: string) {
 
     return this.http
       .get(this.productUrl + tripCode)
-      .toPromise()
-      .then(response => response as Product)
-      .catch(this.handleError);
+      .pipe(map((response) => response as Product));
   };
 
-  public deleteProduct(productId: Number): Promise<Product[]> {
+  public deleteProduct(productId: Number) {
 
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
@@ -57,12 +53,10 @@ export class ProductDataService {
     });
     return this.http
       .delete(this.productUrl + productId, { headers: headers })
-      .toPromise()
-      .then(response => response as Product[])
-      .catch(this.handleError);
+      .pipe(map((response) => response as Product[]));;
   };
 
-  public updateProduct(formData: Product): Promise<Product> {
+  public updateProduct(formData: Product) {
     
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
@@ -70,19 +64,7 @@ export class ProductDataService {
     });
     return this.http
       .put(this.productUrl + formData.id, formData, { headers: headers })
-      .toPromise()
-      .then(response => response as Product[])
-      .catch(this.handleError);
+      .pipe(map((response) => response as Product));;
   }
-
-  private handleError(error: any): Promise<any> {
-    console.error('Something has gone wrong', error);
-    return Promise.reject(error.message || error);
-  }
-
-  
-
-  
-
   
 }

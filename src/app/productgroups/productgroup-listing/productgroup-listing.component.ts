@@ -32,10 +32,12 @@ export class ProductGroupListingComponent implements OnInit {
     this.message = 'Searching for products';
     this.productGroupDataService
       .getProductGroups()
-      .then(foundProductGroups => {
+      .subscribe(foundProductGroups => {
         this.message = foundProductGroups.length > 0 ? '' : 'No product groups found';
         this.productGroups = foundProductGroups;
-        console.log(this.productGroups);
+      }, error => {
+        alert("Problem fetching product groups!");
+        this.router.navigate(['']);
       });
   }
   public isLoggedIn(): boolean {
@@ -45,9 +47,10 @@ export class ProductGroupListingComponent implements OnInit {
     this.getProducts();
   }
   deleteProductGroup(productGroup: ProductGroup): void{
-
+    // make sure correct productGroupCode is selected
     localStorage.removeItem('productGroupCode');
     localStorage.setItem('productGroupCode', productGroup.id.toString());
+
     this.router.navigate(['delete-productgroup']);
   }
 }

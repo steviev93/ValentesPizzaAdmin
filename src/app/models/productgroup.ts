@@ -1,5 +1,5 @@
 export interface ProductGroup {
-    id: string,
+    id: Number,
     name: string
     
 

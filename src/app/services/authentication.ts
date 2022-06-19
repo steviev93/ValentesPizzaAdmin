@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/user';
+import {map} from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthResponse } from '../models/authresponse';
 import { ProductDataService } from '../services/product-data.service';
@@ -26,7 +27,8 @@ export class AuthenticationService {
         this.storage.setItem('web-token', token);
     }
 
-    public register(user: User): Promise<AuthResponse> {
+    // expand on this to register new admin users maybe by a screen only visible to pre-existing admins?
+    public register(user: User) {
         return this.makeAuthApiCall("register", user);
     }
 
@@ -34,6 +36,7 @@ export class AuthenticationService {
         this.storage.removeItem('web-token');
     }
 
+    // check to see if user is logged in to allow certain views
     public isLoggedIn(): boolean {
         const token: string = this.getToken();
         if (token) {
@@ -45,17 +48,15 @@ export class AuthenticationService {
     }
 
 
-    public login(user: User): Promise<any> {
-        return this.makeAuthApiCall("login", user).then((authResp: AuthResponse) => this.saveToken(authResp.token));
+    public login(user: User) {
+        return this.makeAuthApiCall("login", user).pipe(map((authResp: AuthResponse) => this.saveToken(authResp.token)));
     }
 
-    private makeAuthApiCall(urlPath: string, user: User): Promise<AuthResponse> {
+    private makeAuthApiCall(urlPath: string, user: User) {
         const url: string = `${this.apiBaseUrl}/${urlPath}`;
         return this.http
-            .post(url, user)
-            .toPromise()
-            .then((response) => response as AuthResponse)
-            .catch(this.handleError);
+            .post<AuthResponse>(url, user)
+            .pipe(map((response) => response as AuthResponse));
     }
     
     public getCurrentUser(): User {

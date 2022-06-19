@@ -34,7 +34,9 @@ export class LoginComponent implements OnInit {
 
   private doLogin(): void {
     this.authenticationService.login(this.credentials)
-      .then(() => this.router.navigateByUrl('list-products'))
-      .catch((message) => this.formError = message);
+      .subscribe(() => this.router.navigateByUrl('list-products'), error => {
+        alert("Problem logging in!");
+        this.router.navigate(['']);
+      });
   }
 }

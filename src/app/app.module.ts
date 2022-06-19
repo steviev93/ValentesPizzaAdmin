@@ -37,8 +37,8 @@ import { ProductGroupListingComponent } from './productgroups/productgroup-listi
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule

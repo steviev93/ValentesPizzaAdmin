@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductGroupDataService } from '../../services/productgroup-data.service';
 
@@ -10,28 +10,28 @@ import { ProductGroupDataService } from '../../services/productgroup-data.servic
 })
 export class DeleteProductGroupComponent implements OnInit {
 
-  productGroupCode:String;
-  deleteForm:FormGroup;
-  productGroupName:String;
+  productGroupCode: String;
+  deleteForm: FormGroup;
+  productGroupName: String;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private productGroupService: ProductGroupDataService
-  ) { 
+  ) {
     this.productGroupCode = "";
     this.productGroupName = "";
     this.deleteForm = formBuilder.group({
       title: formBuilder.control('initial value', Validators.required)
-  });
+    });
   }
 
   ngOnInit(): void {
-    
+
     let productGroupCode = localStorage.getItem("productGroupCode");
     this.deleteForm = this.formBuilder.group({
       _id: [productGroupCode],
       name: [this.productGroupName, Validators.required],
-      
+
     })
     if (!productGroupCode) {
       alert("Something wrong, couldn't find where I stashed productGroupCode!");
@@ -39,27 +39,26 @@ export class DeleteProductGroupComponent implements OnInit {
       return;
     }
     this.productGroupService
-    .getProductGroup(productGroupCode)
-    .then(foundProductGroups => {
-      
-      this.productGroupName = foundProductGroups.name;
-      this.deleteForm.controls['name'].setValue(this.productGroupName);
-      console.log(this.productGroupName);
-    });
-    // initialize form
-    
-    
-    
+      .getProductGroup(productGroupCode)
+      .subscribe(foundProductGroups => {
 
-    
+        this.productGroupName = foundProductGroups.name;
+        this.deleteForm.controls['name'].setValue(this.productGroupName);
+        console.log(this.productGroupName);
+      });
+    // initialize form
+
   }
 
-   onSubmit() {
+  onSubmit() {
     if (this.deleteForm.valid) {
       this.productGroupService.deleteProductGroup(this.deleteForm.value.id)
-        .then(data => {
+        .subscribe(() => {
           this.router.navigate(['']);
-      });
+        }, error => {
+          alert("Problem deleting product groups!");
+          this.router.navigate(['']);
+        });
     }
   }
 

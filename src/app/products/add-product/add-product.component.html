@@ -1,86 +1,77 @@
 <div class="col-md-3">
-    <h2 class="text-center">Add Product</h2>
-    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+  <h2 class="text-center">Add Product</h2>
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit(fileInput)">
 
     <div class="form-group">
-        <label>Name:</label>
-        <input type="text" formControlName="name" placeholder="Name" class="form-control" 
+      <label>Name:</label>
+      <input type="text" formControlName="name" placeholder="Name" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-            <div *ngIf="submitted && f.name.errors">
-                <div *ngIf="f.name.errors.required">
-                Name is required
-                </div>
-            </div>
+      <div *ngIf="submitted && f.name.errors">
+        <div *ngIf="f.name.errors.required">
+          Name is required
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
-        <label>Price:</label>
-        <input type="text" formControlName="price"
-        placeholder="Price" class="form-control"
+      <label>Price:</label>
+      <input type="text" formControlName="price" placeholder="Price" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.price.errors }">
-        <div *ngIf="submitted && f.price.errors">
-            <div *ngIf="f.price.errors.required">
-            Price is required
-            </div>
+      <div *ngIf="submitted && f.price.errors">
+        <div *ngIf="f.price.errors.required">
+          Price is required
         </div>
+      </div>
     </div>
-    
+
     <div class="form-group">
-        <label>Description:</label>
-        <input type="text" formControlName="description"
-        placeholder="Description" class="form-control"
+      <label>Description:</label>
+      <input type="text" formControlName="description" placeholder="Description" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
-        <div *ngIf="submitted && f.description.errors">
-            <div *ngIf="f.description.errors.required">
-              Description is required
-            </div>
+      <div *ngIf="submitted && f.description.errors">
+        <div *ngIf="f.description.errors.required">
+          Description is required
         </div>
-    </div> 
+      </div>
+    </div>
 
     <div class="form-group">
       <label style="width:100%">Product Group:</label>
-      <select style="width:100%;height:2.5em" class="form-select" aria-label="Default select example" 
-      formControlName="productGroup" [ngClass]="{ 'is-invalid': submitted && f.productGroup.errors }"
-      [(ngModel)]="selected">
-      <option *ngFor="let pg of productGroupList" [value]="pg.id">
-        {{ pg.name }}
-    </option>
+      <select style="width:100%;height:2.5em" class="form-select" aria-label="Default select example"
+        formControlName="productGroup" [ngClass]="{ 'is-invalid': submitted && f.productGroup.errors }"
+        [(ngModel)]="selected">
+        <option *ngFor="let pg of productGroupList" [value]="pg.id">
+          {{ pg.name }}
+        </option>
       </select>
       <div *ngIf="submitted && f.productGroup.errors">
-          <div *ngIf="f.productGroup.errors.required">
+        <div *ngIf="f.productGroup.errors.required">
           Product Group is required
-          </div>
+        </div>
       </div>
-    </div> 
+    </div>
 
 
     <div class="form-group">
       <label>Image:</label>
-      <input type="text" formControlName="image"
-      placeholder="Image" class="form-control"
-      [ngClass]="{ 'is-invalid': submitted && f.image.errors }">
+
+      <br />
+      <button type="button" class="btn"
+        style="color:white;font-family: 'Satisfy', cursive;background-color:rgb(235, 16, 16); font-weight: bold;"
+        (click)="fileInput.click()">Choose File</button>
+      <input hidden #fileInput type="file" id="file" (change)="setFilename(fileInput.files)" />
+      
+
+        <label>{{ filename }}</label>
+      <br />
+      <img [src]="imageSource" />
       <div *ngIf="submitted && f.image.errors">
-          <div *ngIf="f.image.errors.required">
+        <div *ngIf="f.image.errors.required">
           Image is required
-          </div>
+        </div>
       </div>
-      <!-- 
-        When I have API Functionality in place
-        <button type="button" (click)="fileInput.click()">Choose File</button>
-      <input
-        hidden
-        #fileInput
-        type="file"
-        id="file"
-        (change)="setFilename(fileInput.files)"
-      />
-      <label>{{ filename }}</label>
-      <br />
-      <button type="button" (click)="save(fileInput.files)">Save</button>
-      <br />
-      <img [src]="imageSource" /> -->
-    </div>  
-  
+    </div>
+
     <button type="submit" class="btn btn-info" [disabled]="!(productGroupList.length > 0)">Save</button>
     <div *ngIf="!(productGroupList.length > 0)">
       Must create product groups before creating products!

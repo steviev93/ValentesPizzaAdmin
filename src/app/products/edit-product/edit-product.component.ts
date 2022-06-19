@@ -48,13 +48,16 @@ export class EditProductComponent implements OnInit {
     }
     this.productService
       .getProduct(productCode)
-      .then(foundProduct => {
+      .subscribe(foundProduct => {
         this.message = foundProduct == null ? '' : 'No products found';
         this.product = foundProduct as Product;
         this.selected = foundProduct.productGroupId;
         this.getProductGroup(this.selected);
-
-      });
+      }, error => {
+        alert("Something wrong, I couldn't grab the product from the API!");
+        this.router.navigate(['']);
+      }
+      );
 
     this.product = product;
     // initialize form
@@ -67,11 +70,14 @@ export class EditProductComponent implements OnInit {
       image: [''],
     });
     this.productService.getProduct(productCode)
-      .then(data => {
+      .subscribe(data => {
         console.log(data);
         // Don't use editForm.setValue() as it will throw console error
         this.editForm.patchValue(data as Product);
         this.editForm.controls['id'].setValue(data.id);
+      }, error => {
+        alert("Something wrong, I couldn't grab the product from the API!");
+        this.router.navigate(['']);
       })
 
   }
@@ -80,17 +86,17 @@ export class EditProductComponent implements OnInit {
 
     this.message = 'Searching for products';
     console.log(productGroupId);
-    this.productGroupService
-      .getProductGroup(productGroupId)
-      .then(foundProductGroup => {
-        this.message = foundProductGroup == null ? '' : 'No products found';
-        this.productGroup = foundProductGroup;
-      });
+    
+    // get all product groups, assign productGroup to one whose id matches item to be edited
     this.productGroupService
       .getProductGroups()
-      .then(foundProductGroups => {
+      .subscribe(foundProductGroups => {
         this.message = foundProductGroups == null ? '' : 'No product groups found';
         this.productGroupList = foundProductGroups;
+        this.productGroup = this.productGroupList.filter(pg => pg.id === this.product.id)[0];
+      }, error => {
+        alert("Problem fetching product groups!");
+        this.router.navigate(['']);
       });
   }
 
@@ -99,8 +105,11 @@ export class EditProductComponent implements OnInit {
     if (this.editForm.valid) {
       this.editForm.value.productGroupId = this.selected;
       this.productService.updateProduct(this.editForm.value)
-        .then(data => {
+        .subscribe(data => {
           console.log(data);
+          this.router.navigate(['']);
+        }, error => {
+          alert("Problem updating product!");
           this.router.navigate(['']);
         });
     }
